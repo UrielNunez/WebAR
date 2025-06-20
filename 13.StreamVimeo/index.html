@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+    "mindar-image-three":"https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"
+  }
+}
+</script>
+    <script type="module" src="Css.js"></script>
+
+    <!--
+    ###style for image tracking start-->
+    <style>
+        html,
+        body {
+            position: relative;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden
+        }
+        #ar-div{
+            width: 1500px;
+            height: 1500px;
+            visibility: hidden;
+
+            background: #0000ff;
+            opacity: 0.6;
+            font-size: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color:  white;
+        }
+    </style>
+    
+
+    <!--### style for custom container ar web-->
+    <!--
+    <style>
+        #arContainer{
+            height: 300px;
+            width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+    -->
+
+
+
+</head>
+
+<body>
+    
+    <div id="ar-div">This is a css div
+        <!--IN CASE HAVE VIMEO CLOUD-->
+        <iframe src="https://player.vimeo.com/" frameborder="0" width="1000" height="1000"></iframe>
+    </div>
+
+</body>
+
+</html>
