@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const { renderer, scene, camera } = mindarThree;
 
-    const video = await loadVideo("../Assets/YouTubeAnimation.mp4");
+    const video = await loadVideo("../../WebAR/Assets/YouTubeAnimation.mp4");
     const texture = new THREE.VideoTexture(video);
 
     const geometry = new THREE.PlaneGeometry(1, 1080/1920);
