@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const { renderer, scene, camera } = mindarThree;
 
     const video = await loadVideo("../../WebAR/Assets/YouTubeAnimation.mp4");
+video.muted = true; // <- esto permite autoplay en móviles
+video.playsInline = true; // <- evita que el video se abra a pantalla completa
+video.crossOrigin = "anonymous"; // <- por si el video está en otro dominio
     const texture = new THREE.VideoTexture(video);
 
     const geometry = new THREE.PlaneGeometry(1, 1080/1920);
