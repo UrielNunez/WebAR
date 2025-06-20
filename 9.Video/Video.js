@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', () => {
       video.muted = false;
       video.volume = 1.0;
-      video.play(); // por si estaba pausado o bloqueado
+      video.play();
+      document.getElementById('tap-to-unmute').style.display = 'none';
     }, { once: true });
 
     video.addEventListener("play", () => {
