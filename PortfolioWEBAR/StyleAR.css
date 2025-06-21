@@ -152,6 +152,7 @@ body {
 
 /* Botón izquierdo y derecho*/
 #btn-left, #btn-right {
+  all: unset;
   position: absolute;
   padding: 10px 15px;
   background: transparent;
@@ -159,7 +160,12 @@ body {
   transition: transform 0.2s ease;
   cursor: pointer;
 }
-
+#btn-left svg {
+  fill: black
+}
+#btn-right svg {
+  fill: black;
+}
 /* Posiciones específicas arriba/abajo/izquierda/derecha */
 #btn-left {
   transform: translate(-300px, 150px);
@@ -205,8 +211,8 @@ body {
 }
 .image{
     
-    width: 50%;
-    max-width: 250px; /* Se establece un ancho máximo para evitar que la imagen se desborde de su contenedor */
+    width: 550px;
+    max-width: none; /* Se establece un ancho máximo para evitar que la imagen se desborde de su contenedor */
     border-radius: 55% 45% 55% 45%;
     overflow: hidden;
     animation: imgFloat 7s ease-in-out infinite;
@@ -225,9 +231,9 @@ body {
 }
 
 #texto-Name {
-    width: 400px;
+    width: 850px;
     height: 100px;
-    transform: translate(30px);
+    transform: translate(60px);
 }
 
 #texto-Name span {
@@ -236,6 +242,13 @@ body {
   margin: 0;
   color: white;
 }
+#texto-Name .typedExp {
+  font-family: 'Denk One', sans-serif;
+  font-size: 58px;
+  margin: 0;
+  color: white;
+}
+
 
 /* Right: 50x100 */
 #ar-Right {
