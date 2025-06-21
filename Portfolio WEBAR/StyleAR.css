@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Denk+One&family=Jersey+10&family=Matemasie&family=Noto+Sans+JP:wght@100..900&family=Oswald:wght@200..700&display=swap');
+html,
+body {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+#scanning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 2;
+}
+
+@media (min-aspect-ratio: 1/1) {
+    #scanning .inner {
+        width: 50vh;
+        height: 50vh;
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    #scanning .inner {
+        width: 80vw;
+        height: 80vw;
+    }
+}
+
+#scanning .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    background:
+        linear-gradient(to right, white 10px, transparent 10px) 0 0,
+        linear-gradient(to right, white 10px, transparent 10px) 0 100%,
+        linear-gradient(to left, white 10px, transparent 10px) 100% 0,
+        linear-gradient(to left, white 10px, transparent 10px) 100% 100%,
+        linear-gradient(to bottom, white 10px, transparent 10px) 0 0,
+        linear-gradient(to bottom, white 10px, transparent 10px) 100% 0,
+        linear-gradient(to top, white 10px, transparent 10px) 0 100%,
+        linear-gradient(to top, white 10px, transparent 10px) 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+}
+
+#scanning.hidden {
+    display: none;
+}
+
+#scanning img {
+    opacity: 0.6;
+    width: 90%;
+    align-self: center;
+}
+
+#scanning .inner .scanline {
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    background: white;
+    animation: move 2s linear infinite;
+}
+
+@keyframes move {
+
+    0%,
+    100% {
+        top: 0%
+    }
+
+    50% {
+        top: calc(100% - 10px)
+    }
+}
+
+
+#contenido-Tarjeta {
+  position: relative; /* Necesario para posicionar hijos absolutamente */
+  width: 1900px;
+  height: 1500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  background: rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+/*Texto principal*/
+#Texto {
+  position: absolute;
+  top: -250px; /* Puedes ajustar este valor */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10; /* Asegura que esté por encima del contenido */
+  background: transparent; /* O ponle fondo si lo deseas */
+}
+#Texto h1, #Texto h2 {
+  margin: 0;
+  padding: 0;
+}
+
+#Texto h1 {
+  font-family: 'Denk One', sans-serif;
+  font-size: 78px;
+  color: white;
+}
+
+#Texto h2 {
+  font-family: 'Denk One', sans-serif;
+  font-size: 40px;
+  color: white;
+}
+
+/* Top: puede ser más ancho si lo deseas */
+#ar-Top,#player {
+  width: 960px;
+  height: 550px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: visible;
+  position: relative; /* Necesario para que los botones se ubiquen dentro */
+}
+
+
+.boton-wrapper {
+  position: relative;
+  width: 960px;
+  height: 0px; /* sin altura visual */
+ 
+}
+
+/* Botón izquierdo y derecho*/
+#btn-left, #btn-right {
+  position: absolute;
+  padding: 10px 15px;
+  background: transparent;
+  border: none;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+/* Posiciones específicas arriba/abajo/izquierda/derecha */
+#btn-left {
+  transform: translate(-300px, 150px);
+}
+#btn-right {
+  right: 0;
+  transform: translate(300px, 150px);
+}
+
+/* Animación al hacer clic */
+#btn-left:active {
+  transform: translate(-350px, 150px); /* left */
+}
+#btn-right:active {
+  transform: translate(350px, 150px);  /* right */
+}
+#btn-left:hover,
+#btn-right:hover {
+  color: rgb(170, 156, 156); /* Cambia el color del fill en hover */
+}
+
+/* fila que contiene left y right */
+#fila-horizontal {
+  display: flex;
+  justify-content: space-evenly; /* centrado más uniforme */
+  align-items: center;
+  width: 100%; /* para que use todo el ancho disponible */
+  flex: 1;
+}
+
+/* Left: 100x50 */
+#ar-Left {
+  width: 650px;
+  height: 350px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: visible;
+
+  /*  mueve a la izquierda (-X) y arriba (-Y) */
+  transform: translate(-500px, -250px);
+}
+.image{
+    
+    width: 50%;
+    max-width: 250px; /* Se establece un ancho máximo para evitar que la imagen se desborde de su contenedor */
+    border-radius: 55% 45% 55% 45%;
+    overflow: hidden;
+    animation: imgFloat 7s ease-in-out infinite;
+    margin-left: -30px;
+}
+.image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+@keyframes imgFloat {
+    50%{
+        transform: translateY(20px);
+        border-radius: 45% 55% 45% 55%;
+    }
+}
+
+#texto-Name {
+    width: 400px;
+    height: 100px;
+    transform: translate(30px);
+}
+
+#texto-Name h1 {
+  font-family: 'Denk One', sans-serif;
+  font-size: 78px;
+  margin: 0;
+  color: white;
+}
+
+/* Right: 50x100 */
+#ar-Right {
+  width: 350px;
+  height: 650px;
+  background: #00aa00;
+  opacity: 0.6;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: visible;
+
+  /*  mueve a la izquierda (X) y arriba (-Y) */
+  transform: translate(200px, -250px);
+}
