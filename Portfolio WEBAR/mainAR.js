@@ -26,6 +26,15 @@ const createYouTube = () => {
     });
 };
 
+/*---------------TYPING EFFECT------------------*/
+var typingEffect = new Typed(".typedText", {
+    strings: [" Unity Developer", " AR Developer", " VR Developer", " 3D Modeler"," Video Game Developer", " YouTuber", " Video Editor", " Web Developer"],
+    loop: true,
+    typeSpeed: 100,
+    backSpeed: 80,
+    backDelay: 2000
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
 

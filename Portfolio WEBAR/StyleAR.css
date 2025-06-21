@@ -230,7 +230,7 @@ body {
     transform: translate(30px);
 }
 
-#texto-Name h1 {
+#texto-Name span {
   font-family: 'Denk One', sans-serif;
   font-size: 78px;
   margin: 0;
