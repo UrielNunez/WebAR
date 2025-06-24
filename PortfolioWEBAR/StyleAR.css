@@ -100,8 +100,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  background: rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 /*Texto principal*/
 #Texto {
@@ -254,9 +252,6 @@ body {
 #ar-Right {
   width: 350px;
   height: 650px;
-  background: #00aa00;
-  opacity: 0.6;
-  color: white;
   font-size: 14px;
   display: flex;
   justify-content: center;
@@ -265,4 +260,21 @@ body {
 
   /*  mueve a la izquierda (X) y arriba (-Y) */
   transform: translate(200px, -250px);
+}
+.social-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea a la izquierda */
+  gap: 50px;               /* Espacio entre iconos */
+  margin-left: -225px;       /* Más a la izquierda */
+}
+
+.social-column img {
+  width: 100px;             /* Tamaño más grande */
+  height: 100px;
+  transition: transform 0.3s ease;
+}
+
+.social-column img:hover {
+  transform: scale(1.2);
 }
