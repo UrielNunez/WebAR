@@ -38,6 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
             renderer.render(scene, camera);
         });
 
+        const controller = renderer.xr.getController(0);
+
+        const events = document.getElementById('events')
+        controller.addEventListener("selectstart", () =>{
+            events.prepend("select start ")
+        });
+        controller.addEventListener("selectend", () =>{
+            events.prepend("select end ")
+        });
+        controller.addEventListener("select", () =>{
+            events.prepend("select ")
+        });
+
         const arButton = ARButton.createButton(renderer, {optionalFeatures: ['dom-overlay'], domOverlay: {root: document.body}});
         document.body.appendChild(arButton);
 
