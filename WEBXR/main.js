@@ -5,7 +5,7 @@ import { ARButton } from 'three/addons/webxr/ARButton.js';
 document.addEventListener('DOMContentLoaded', () => {
     const initialize = async () => {
 
-        /*
+        //BOTTON AR PERSONALIZADO 
         const arButton = document.getElementById("ar-button");
 
         const supported = navigator.xr && navigator.xr.isSessionSupported("immersive-ar");
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             arButton.textContent = "Not Supported";
             arButton.disable = true;
             return;
-        } */
+        } 
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera();
@@ -33,11 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mesh.position.set(0, 0, -0.3);
         scene.add(mesh);
 
-        renderer.xr.enabled = true;
-        renderer.setAnimationLoop(() => {
-            renderer.render(scene, camera);
-        });
-
+       
+        //EVENTOS DE SELECCION DE PANTALLA
         const controller = renderer.xr.getController(0);
 
         const events = document.getElementById('events')
@@ -51,10 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
             events.prepend("select ")
         });
 
-        const arButton = ARButton.createButton(renderer, {optionalFeatures: ['dom-overlay'], domOverlay: {root: document.body}});
-        document.body.appendChild(arButton);
+        
 
-        /*
+        //BOTON AR PERSONALIZADO
+
         let currentSession = null
         const start = async() => {
             currentSession = await navigator.xr.requestSession("immersive-ar", {optionalFeatures: ['dom-overlay'], domOverlay: {root: document.body}});
@@ -83,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 start();
             }
         });
-        */
+        
     }
     initialize();
 });
