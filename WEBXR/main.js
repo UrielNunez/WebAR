@@ -56,7 +56,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const material = new THREE.MeshBasicMaterial({ color: 0xffbff * Math.random() });
                 const mesh = new THREE.Mesh(geometry, material);
 
-                mesh.position.applyMatrix4(controller.matrixWorld);
+                //Para poner la posicion un poco alejada de la posicion virtuald el telefono (mejor opcion)
+                //se obtiene la posicion virtual del telefono
+                const position = new THREE.Vector3();
+                position.setFromMatrixPosition(controller.matrixWorld)
+                //mesh.position.applyMatrix4(controller.matrixWorld); //PARA PONER EL OBJETO JUSTA EN LA POSICION VIRTUALD EL TELEFONO 
+                //se calcula la direccion para que el objeto este un poco mas adelante del telfono
+                const direction = new THREE.Vector3(0,0,-1);
+                direction.applyQuaternion(controller.quaternion);
+                //se mueve el cubo 0.3 metros hacia adelante para que no aparezca tan cerca de la posicion del telfono 
+                position.add(direction.multiplyScalar(0.3));
+                mesh.position.copy(position);
+                
                 mesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
                 scene.add(mesh);
             });
