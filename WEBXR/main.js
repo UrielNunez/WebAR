@@ -1,14 +1,12 @@
 import * as THREE from 'three';
-import { ARButton } from 'three/addons/webxr/ARButton.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
     const initialize = async () => {
 
         //BOTTON AR PERSONALIZADO 
+        const arButton = document.getElementById("ar-button");
         {
-            const arButton = document.getElementById("ar-button");
-
             const supported = navigator.xr && navigator.xr.isSessionSupported("immersive-ar");
             if (!supported) {
                 arButton.textContent = "Not Supported";
@@ -66,8 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         //seccion logica de BOTON AR PERSONALIZADO
+        let currentSession = null
         {
-            let currentSession = null
             const start = async () => {
                 currentSession = await navigator.xr.requestSession("immersive-ar", { optionalFeatures: ['dom-overlay'], domOverlay: { root: document.body } });
 
