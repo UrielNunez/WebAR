@@ -1,8 +1,6 @@
 import * as THREE from 'three';
 import { MindARThree } from 'mindar-image-three';
-//import {mockWithVideo, mockWithImage} from '../Assets/camera-mock.js'
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { loadGLTF, loadAudio, loadVideo } from '../Assets/loader.js'
+import { loadGLTF, loadAudio, loadVideo, loadFBX } from '../Assets/loader.js'
 import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 
 //PARA LOS VIDEOS DE YOUTUBE
@@ -35,7 +33,7 @@ var typingEffect = new Typed(".typedText", {
     backDelay: 1000
 });
 var typingEffectExp = new Typed(".typedExp", {
-    strings:[" Unity Developer", " Web Developer", " AR Developer", " Game Designer", " Video Editor", " VR Developer", " 3D Developer"],
+    strings: [" Unity Developer", " Web Developer", " AR Developer", " Game Designer", " Video Editor", " VR Developer", " 3D Developer"],
     loop: true,
     typeSpeed: 100,
     backSpeed: 80,
@@ -82,11 +80,35 @@ document.addEventListener('DOMContentLoaded', () => {
             player.loadVideoById(videoIds[currentVideoIndex]);
         });
 
+        //luz
+        const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+        scene.add(light);
+        const anchor = mindarThree.addAnchor(0);
+
+        const gltf = await loadGLTF("../Assets/Modelo.glb");
+        //scale model
+        gltf.scene.scale.set(1, 1, 1);
+        //position model
+        gltf.scene.position.set(0, -1, 0)
+        //model on scene
+        anchor.group.add(gltf.scene);
+        //ANIMATIONS TO 3D MODELS
+        const mixer = new THREE.AnimationMixer(gltf.scene);
+        const action = mixer.clipAction(gltf.animations[0]);
+        action.play();
+
+        const clock = new THREE.Clock();
 
         // start AR
         await mindarThree.start();
         renderer.setAnimationLoop(() => {
+            const delta = clock.getDelta();
+
             cssRenderer.render(cssScene, camera);
+
+            gltf.scene.rotation.set(0, gltf.scene.rotation.y + delta, 0);
+            mixer.update(delta);
+            renderer.render(scene, camera);
         });
     }
     start();
