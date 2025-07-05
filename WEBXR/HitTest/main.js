@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+        const camera = new THREE.PerspectiveCamera();
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -26,59 +26,60 @@ document.addEventListener('DOMContentLoaded', () => {
         const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
         scene.add(light);
 
-        //Modelo 3D creado
-        {
-            /*
-            const geometry = new THREE.BoxGeometry(0.06, 0.06, 0.06);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffbff });
-            const mesh = new THREE.Mesh(geometry, material);
+        const reticleGeometry = new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2);
+        const reticleMaterial = new THREE.MeshBasicMaterial();
+        const reticle = new THREE.Mesh(reticleGeometry, reticleMaterial);
+        reticle.matrixAutoUpdate = false;
+        reticle.visible = false;
+        scene.add(reticle);
 
-            mesh.position.set(0, 0, -0.3);
-            scene.add(mesh);
-            */
-        }
+
 
         //EVENTOS DE SELECCION DE PANTALLA
         {
             const controller = renderer.xr.getController(0);
             scene.add(controller);
-            /*
-            const events = document.getElementById('events')
-            controller.addEventListener("selectstart", () => {
-                events.prepend("select start ")
-            });
-            controller.addEventListener("selectend", () => {
-                events.prepend("select end ")
-            });*/
-
             controller.addEventListener("select", () => {
                 const geometry = new THREE.BoxGeometry(0.06, 0.06, 0.06);
                 const material = new THREE.MeshBasicMaterial({ color: 0xffbff * Math.random() });
                 const mesh = new THREE.Mesh(geometry, material);
-
-                //Para poner la posicion un poco alejada de la posicion virtuald el telefono (mejor opcion)
-                //se obtiene la posicion virtual del telefono
-                const position = new THREE.Vector3();
-                position.setFromMatrixPosition(controller.matrixWorld)
-                //mesh.position.applyMatrix4(controller.matrixWorld); //PARA PONER EL OBJETO JUSTA EN LA POSICION VIRTUALD EL TELEFONO 
-                //se calcula la direccion para que el objeto este un poco mas adelante del telfono
-                const direction = new THREE.Vector3(0,0,-1);
-                direction.applyQuaternion(controller.quaternion);
-                //se mueve el cubo 0.3 metros hacia adelante para que no aparezca tan cerca de la posicion del telfono 
-                position.add(direction.multiplyScalar(0.3));
-                mesh.position.copy(position);
-                
-                mesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
+                mesh.position.setFromMatrixPosition(reticle.matrix);
+                mesh.scale.y = Math.random() *2 +1;
                 scene.add(mesh);
+
             });
         }
+        renderer.xr.addEventListener("sessionstart", async () => {
+            const session = renderer.xr.getSession();
+
+            const viewerReferenceSpace = await session.requestReferenceSpaceSpace("viewer")
+            const hitTestSource = await session.requestHitTestSource({ space: viewerReferenceSpace });
+
+            renderer.setAnimationLoop((timestamp, frame) => {
+                if (!frame) return;
+                const hitTestResults = frame.getHitTestResults(hitTestSource);
+                if (hitTestResults.length > 0) {
+                    const hit = hitTestResults[0];
+                    const referenceSpace = renderer.xr.getReferenceSpace();
+                    const hitPose = hit.getPose(referenceSpace);
+                    reticle.visible = true;
+                    reticle.matrix.fromArray(hitPose.transform.matrix);
+                } else {
+                    reticle.visible = false;
+                }
+                renderer.render(scene, camera);
+            });
+        });
+        renderer.xr.addEventListener("sessionend", async () => {
+
+        });
 
 
         //seccion logica de BOTON AR PERSONALIZADO
         let currentSession = null
         {
             const start = async () => {
-                currentSession = await navigator.xr.requestSession("immersive-ar", { optionalFeatures: ['dom-overlay'], domOverlay: { root: document.body } });
+                currentSession = await navigator.xr.requestSession("immersive-ar", { requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay'], domOverlay: { root: document.body } });
 
                 renderer.xr.enabled = true;
                 renderer.xr.setReferenceSpaceType('local');
@@ -105,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+
 
     }
     initialize();
