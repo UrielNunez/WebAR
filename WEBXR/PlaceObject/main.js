@@ -26,30 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
         scene.add(light);
 
-        //Modelo 3D creado
-        {
-            /*
-            const geometry = new THREE.BoxGeometry(0.06, 0.06, 0.06);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffbff });
-            const mesh = new THREE.Mesh(geometry, material);
-
-            mesh.position.set(0, 0, -0.3);
-            scene.add(mesh);
-            */
-        }
-
         //EVENTOS DE SELECCION DE PANTALLA
         {
             const controller = renderer.xr.getController(0);
             scene.add(controller);
-            /*
-            const events = document.getElementById('events')
-            controller.addEventListener("selectstart", () => {
-                events.prepend("select start ")
-            });
-            controller.addEventListener("selectend", () => {
-                events.prepend("select end ")
-            });*/
 
             controller.addEventListener("select", () => {
                 const geometry = new THREE.BoxGeometry(0.06, 0.06, 0.06);
