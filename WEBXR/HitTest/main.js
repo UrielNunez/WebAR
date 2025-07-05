@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.xr.addEventListener("sessionstart", async () => {
             const session = renderer.xr.getSession();
 
-            const viewerReferenceSpace = await session.requestReferenceSpaceSpace("viewer")
+            const viewerReferenceSpace = await session.requestReferenceSpace("viewer")
             const hitTestSource = await session.requestHitTestSource({ space: viewerReferenceSpace });
 
             renderer.setAnimationLoop((timestamp, frame) => {
@@ -87,9 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 arButton.textContent = "End";
 
-                renderer.setAnimationLoop(() => {
-                    renderer.render(scene, camera);
-                });
             }
             const end = async () => {
                 currentSession.end();
